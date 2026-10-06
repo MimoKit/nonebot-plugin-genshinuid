@@ -1,0 +1,21 @@
+{
+  "python.languageServer": "None",
+  "editor.formatOnSave": true,
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit",
+      "source.fixAll.ruff": "explicit"
+    }
+  },
+  "python.autoComplete.extraPaths": [
+    "${workspaceFolder}/gsuid_core"
+  ],
+  "basedpyright.analysis.typeCheckingMode": "basic",
+  "basedpyright.analysis.extraPaths": [
+    "${workspaceFolder}/gsuid_core"
+  ],
+  "python.analysis.typeCheckingMode": "off",
+  "ruff.exclude": ["pyproject.toml"]
+}

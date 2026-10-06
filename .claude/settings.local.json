@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import nonebot.adapters.telegram as t; print\\(t.__file__\\)\")",
+      "Bash(pip show *)",
+      "Bash(pip index *)",
+      "Bash(pip install *)",
+      "Bash(cd /tmp)",
+      "Bash(pip download *)"
+    ]
+  }
+}

@@ -1,17 +1,14 @@
-"""[早柚协议](https://docs.sayu-bot.com/CodeAdapter/Protocol.html)数据包结构。"""
-from __future__ import annotations
-
 from typing import Any, Dict, List, Literal, Optional
 
-from pydantic import BaseModel
+from msgspec import Struct
 
 
-class Message(BaseModel):
+class Message(Struct):
     type: Optional[str] = None
     data: Optional[Any] = None
 
 
-class MessageReceive(BaseModel):
+class MessageReceive(Struct):
     bot_id: str = "Bot"
     bot_self_id: str = ""
     msg_id: str = ""
@@ -23,7 +20,7 @@ class MessageReceive(BaseModel):
     content: List[Message] = []
 
 
-class MessageContent(BaseModel):
+class MessageContent(Struct):
     raw: Optional[MessageReceive] = None
     raw_text: str = ""
     command: Optional[str] = None
@@ -34,10 +31,12 @@ class MessageContent(BaseModel):
     at_list: List[Any] = []
 
 
-class MessageSend(BaseModel):
+class MessageSend(Struct):
     bot_id: str = "Bot"
     bot_self_id: str = ""
     msg_id: str = ""
     target_type: Optional[str] = None
     target_id: Optional[str] = None
     content: Optional[List[Message]] = None
+    # 回执关联令牌；core 仅在请求 recall_message_id 时下发，非空才需回执
+    echo: Optional[str] = None
