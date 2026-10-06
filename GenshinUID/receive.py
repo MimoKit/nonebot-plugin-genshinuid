@@ -89,10 +89,14 @@ def _sender_qq(event: Event, user_id: str, self_id: str) -> SenderInfo:
         nick = event.author.username or user_id
         return SenderInfo(nickname=nick, user_id=user_id)
     if isinstance(event, (GroupAtMessageCreateEvent, GroupMessageCreateEvent)):
-        return SenderInfo(avatar=f"https://q.qlogo.cn/qqapp/{self_id}/{user_id}/0")
+        # QQ 官方新增 username；老 payload 没有该字段，维持原来只发头像
+        info = SenderInfo(avatar=f"https://q.qlogo.cn/qqapp/{self_id}/{user_id}/0")
+        if event.author.username:
+            info["nickname"] = event.author.username
+        return info
     if isinstance(event, C2CMessageCreateEvent):
         openid = event.author.user_openid
-        nick = f"QQ用户{openid[:4]}" if openid else "QQ用户"
+        nick = event.author.username or (f"QQ用户{openid[:4]}" if openid else "QQ用户")
         return SenderInfo(nickname=nick)
     if isinstance(event, GuildMessageEvent):
         nick = event.author.username or user_id
